@@ -1,12 +1,20 @@
 import React from "react"
 
 export default function Main() {
-    // 2: Declare state: (useState is a hook)
-    const [result, func] = React.useState("hello") // first value (result) is the default value for state variable, and the 2nd value (the function) is how you want to change the state - which becomes the new vertion of state 
+    // 4: Show preview of all podcasts on homepage
+    // first value (result) is the default value for state variable, and the 2nd value (the function) is how you want to change the state - which becomes the new vertion of state 
+    const [podcastsPreviewData, setPodcastsPreviewData] = React.useState([])
+    
+    React.useEffect(function() { // to manage side effects issues
+        console.log("effect ran! well done")
+        fetch("https://podcast-api.netlify.app/shows") // fetch request to the previews of all the shows
+            .then(res => res.json()) // fetch receives a response in json, which we convert to a js object so we can access its properties (id, image etc.)
+            .then(data => setPodcastsPreviewData(data))
+    })
 
     // 1: 
     function previewButton() {
-        const musicArray = musicData.data.music
+        const previewsArray = previewsData.data.preview
         // CAN'T DO THIS YET, BECAUSE YOU NEED TO DO API CALL. WHEN YOU GET TO API LESSON, apply this:
             // do api call to: https://podcast-api.netlify.app/id/<ID>
             // <ID> indicates where the dynamic ID for the requested item should be placed
@@ -19,21 +27,6 @@ export default function Main() {
                  */ 
 
         }
-
-    // 3: FAVOURITES: this is a state to update the amount of favorited music the user has
-    // const [favoriteAmount, setFavoriteAmount] = React.useState(o) // initially the favorites is set to 0 because the user hasn't favorited any music yet
-    
-
-    // 4: Show preview of all podcasts on homepage
-    const [podcastsPreviewData, setPodcastsPreviewData] = React.useState([])
-    
-    React.useEffect(function() { // to manage side effects issues
-        console.log("effect ran! well done")
-        fetch("https://podcast-api.netlify.app/shows") // fetch request to the previews of all the shows
-            .then(res => res.json()) // fetch receives a response in json, which we convert to a js object so we can access its properties (id, image etc.)
-            .then(data => setPodcastsPreviewData(data))
-    })
-
 
         // genre ids and their titles
         const genreMapping = { // genre object to map over
@@ -56,13 +49,6 @@ export default function Main() {
         
         function toggleFavorite() {
             setIsFavorite(prevFavorite => !prevFavorite)
-
-            // setPodcastsPreviewData(prevPodcastsPreviewData => {
-            //     return {
-            //         ...prevPodcastsPreviewData,
-            //         isFavorite: !prevContact.isFavorite
-            //     }
-            // })
         }
 
         

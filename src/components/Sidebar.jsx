@@ -1,3 +1,6 @@
+    // 3: FAVOURITES: this is a state to update the amount of favorited music the user has
+    // const [favoriteAmount, setFavoriteAmount] = React.useState(o) // initially the favorites is set to 0 because the user hasn't favorited any music yet
+    
 import React from "react"
 // this file is for the righthand side bar that includes the audio currently playing as well as the users favorited music
 /** EXAMPLE
@@ -36,11 +39,16 @@ export default function Sidebar() {
     
 
     return (
-        <main>
-            <div>
-                <h1>This is a container for where the users favorited podcast episodes go</h1>
+        <main className="sidebar">
+            <nav className="nav--bar">
+                <h1 className="favorites--text">Favorites</h1>
+                <div className="nav--items">
+                    <img src="./gear-icon.png" className="settings--icon"/>
+                    <img src="./login-icon.png" className="login--icon" />
+                </div>
                 {/* <h2>Amount of favorites: {favoritesCount}</h2>  */}
-            </div>
+            </nav>
+            <h2 className="favorites--amount--text">Favorites: 0</h2>
             <div>
                 <h1>This is a container for where the audio player goes</h1>
             </div>
