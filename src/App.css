@@ -47,4 +47,19 @@
   .podcast-preview p {
     font-size: 14px;
   }
+
+.preview--button {
+  /* width: 50px; this doesnt work for some reason. it only works if you move the img to under the h1 "this is working" */
+  max-width: 10%;
+  /* 1 */
+  position: absolute;
+
+  
+}
+
+.favorite--icon {
+  max-width: 8%;
+  margin-left: 250px;
+  /* margin-bottom: 100%; not working */
+}
   

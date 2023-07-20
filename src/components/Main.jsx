@@ -5,7 +5,7 @@ export default function Main() {
     const [result, func] = React.useState("hello") // first value (result) is the default value for state variable, and the 2nd value (the function) is how you want to change the state - which becomes the new vertion of state 
 
     // 1: 
-    function playButton() {
+    function previewButton() {
         const musicArray = musicData.data.music
         // CAN'T DO THIS YET, BECAUSE YOU NEED TO DO API CALL. WHEN YOU GET TO API LESSON, apply this:
             // do api call to: https://podcast-api.netlify.app/id/<ID>
@@ -34,6 +34,7 @@ export default function Main() {
             .then(data => setPodcastsPreviewData(data))
     })
 
+
         // genre ids and their titles
         const genreMapping = { // genre object to map over
             1: "Personal Growth",
@@ -47,20 +48,29 @@ export default function Main() {
             9: "Kids and Family"
         };
 
+        // favorite icon on  previews (either filled or empty heart)
+        // lesson 22 talks about a favorite/unfavorite button
+        // let heartIcon = podcast.isFavorite === false ? "empty-heart-icon.png" : "filled-heart-icon.png" // set to false so that its automatically unfavorited
 
+        const [isFavorite, setIsFavorite] = React.useState(false)
+        
+        function toggleFavorite() {
+            setIsFavorite(prevFavorite => !prevFavorite)
+
+            // setPodcastsPreviewData(prevPodcastsPreviewData => {
+            //     return {
+            //         ...prevPodcastsPreviewData,
+            //         isFavorite: !prevContact.isFavorite
+            //     }
+            // })
+        }
+
+        
 
     return (
         <main>
             <div>
                 <h1>This is Working!</h1>
-            {/* 1: play this song button (button will be on homepage on every song*/}
-            <button 
-                className="music--button"
-                onClick={playButton}
-                >
-                Play
-            </button>            
-            
                 <div className="podcast-previews">
                 {podcastsPreviewData.map(podcast => ( // parameter 'podcast' represents each item in the array during each iteration of the .map function
                     <div key={podcast.id} className="podcast-preview">
@@ -70,6 +80,35 @@ export default function Main() {
                         <p>Seasons: {podcast.seasons}</p>
                         <p>Genres: {podcast.genres.map(genreId => genreMapping[genreId]).join(', ')}</p>
                         <p>Updated: {podcast.updated}</p>
+                        {/* add preview button here */}
+                        {/* also need to add a isFavorite property that can be true or false */}
+                        
+
+                        
+                        <img 
+                            // src="{`./${heartIcon}`}"
+                            // src={podcast.isFavorite ? "./filled-heart-icon.png" : "./empty-heart-icon.png"}
+                            onClick={toggleFavorite}
+                            className="favorite--icon"
+                        />
+
+                        {/* test */}
+                        <div>
+                            {/* {isFavorite && <img src="./filled-heart-icon.png" onClick={toggleFavorite} />}
+                            {!isFavorite && <img src="./empty-heart-icon.png" onClick={toggleFavorite} />} */}
+
+                            {/* if isFavorite is true, then display filled heart, otherwise empty heart */}
+                            <img onClick={toggleFavorite} src={isFavorite ? "./filled-heart-icon.png" : "./empty-heart-icon.png"} />
+
+
+                        </div>
+
+
+                        <img 
+                            className="preview--button"
+                            onClick={previewButton}
+                            src="./preview-play-button.png"    
+                        />   
                     </div>
                 ))}
                 </div>
