@@ -55,18 +55,24 @@
     margin-bottom: 5px;
     border-radius: 30px
   }
+
+  .podcast--image:hover {
+    filter: brightness(50%);
+  }
   
   .podcast-preview p {
     font-size: 14px;
   }
 
-.preview--button {
+.open--preview--button {
   /* width: 50px; this doesnt work for some reason. it only works if you move the img to under the h1 "this is working" */
   max-width: 10%;
   /* 1 */
   position: absolute;
+}
 
-  
+.open--preview--button:hover {
+  max-width: 11.5%;
 }
 
 .favorite--icon {
@@ -74,6 +80,7 @@
   margin-left: 250px;
   /* margin-bottom: 100%; not working */
 }
+
 
 
 
@@ -100,7 +107,7 @@ SIDEBAR
 
 .favorites--amount--text {
   font-size: 20px;
-  color: #1a1ada;
+  color: #918E9B;
 }
 
 .nav--items {

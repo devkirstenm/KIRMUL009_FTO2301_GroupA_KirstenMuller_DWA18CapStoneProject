@@ -2,11 +2,6 @@
     // const [favoriteAmount, setFavoriteAmount] = React.useState(o) // initially the favorites is set to 0 because the user hasn't favorited any music yet
     
 import React from "react"
-// this file is for the righthand side bar that includes the audio currently playing as well as the users favorited music
-/** EXAMPLE
- * top of sidebar: favorited music
- * bottom of sidebar: audio player
- */
 
 export default function Sidebar() {
 
@@ -35,7 +30,7 @@ export default function Sidebar() {
                         // function add() {
                         //     setCount(prevCount => prevCount + 1)
             })
-    }
+    
     
 
     return (
@@ -54,4 +49,5 @@ export default function Sidebar() {
             </div>
         </main>
     )
+}
 }

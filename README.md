@@ -1,5 +1,25 @@
 # Notes (to come back to)
 
+## STEP-BY-STEP: GETTING AND INTERACTING WITH THE API DATA
+ STEP 1. pull data from API
+ ```js
+    fetch("https://podcast-api.netlify.app/shows")
+                .then(res => res.json()) 
+                .then(data => setPodcastsPreviewData(data))
+```
+STEP 2. map over array of data to display items on screen
+ ```js
+ return (
+    {podcastsPreviewData.map(podcast => ( // parameter 'podcast' represents each item (EACH PODCAST) in the array during each iteration of the .map function. It could be called anything!
+        <div key={podcast.id}>
+            <img src={podcast.image} />                         
+            <h2>{podcast.title}</h2>
+        </div>
+```
+STEP 3. To interact with these items we are still missing something
+
+
+
 ## Conditional rendering
 When should you use &&, when should you use a ternary operator, and when should you use a regular if statement.
 
@@ -29,212 +49,109 @@ return (
         }
 ```
 
-
-
-
-
-
-
-
-
-
-ORIGINAL CODE IN MAIN.JSX
+## Receiving props in a component
+Regarding this first line in this extract from my Main.jsx
 ```js
-import React from "react"
+{podcastsPreviewData.map(podcast => ( // parameter 'podcast' represents each item in the array during each iteration of the .map function (see README.md for more of an explanation)
+    <div key={podcast.id} className="podcast-preview">
+        <img src={podcast.image} />                       
+        <h2>{podcast.title}</h2>
+```
+These notes may help you understand (or look at lesson 10 of Airbnb)
+```js
+// in contact.js: "whatever" contains...
+// an object that has...
+// 4 properties...
+// that match what we have as our prop in app.js
 
-export default function Main() {
-    // 2: Declare state: (useState is a hook)
-    const [result, func] = React.useState("hello") // first value (result) is the default value for state variable, and the 2nd value (the function) is how you want to change the state - which becomes the new vertion of state 
-
-    // 1: 
-    function previewButton() {
-        const musicArray = musicData.data.music
-        // CAN'T DO THIS YET, BECAUSE YOU NEED TO DO API CALL. WHEN YOU GET TO API LESSON, apply this:
-            // do api call to: https://podcast-api.netlify.app/id/<ID>
-            // <ID> indicates where the dynamic ID for the requested item should be placed
-            // in here, "file" is where you get the music from
-                /** EXAMPLE 
-                 * const memesArray = memesData.data.memes
-                 * const randomNumber = Math.floor(Math.random() * memesArray.length)
-                 * const url = memesArray[randomNumber].url
-                 * console.log(url)
-                 */ 
-
-        }
-
-    // 3: FAVOURITES: this is a state to update the amount of favorited music the user has
-    // const [favoriteAmount, setFavoriteAmount] = React.useState(o) // initially the favorites is set to 0 because the user hasn't favorited any music yet
-    
-
-    // 4: Show preview of all podcasts on homepage
-    const [podcastsPreviewData, setPodcastsPreviewData] = React.useState([])
-    
-    React.useEffect(function() { // to manage side effects issues
-        console.log("effect ran! well done")
-        fetch("https://podcast-api.netlify.app/shows") // fetch request to the previews of all the shows
-            .then(res => res.json()) // fetch receives a response in json, which we convert to a js object so we can access its properties (id, image etc.)
-            .then(data => setPodcastsPreviewData(data))
-    })
-
-
-        // genre ids and their titles
-        const genreMapping = { // genre object to map over
-            1: "Personal Growth",
-            2: "True Crime and Investigative Journalism",
-            3: "History",
-            4: "Comedy",
-            5: "Entertainment",
-            6: "Business",
-            7: "Fiction",
-            8: "News",
-            9: "Kids and Family"
-        };
-
-        // favorite icon on  previews (either filled or empty heart)
-        // lesson 22 talks about a favorite/unfavorite button
-        // let heartIcon = podcast.isFavorite === false ? "empty-heart-icon.png" : "filled-heart-icon.png" // set to false so that its automatically unfavorited
-
-        const [isFavorite, setIsFavorite] = React.useState(false)
-        
-        function toggleFavorite() {
-            setIsFavorite(prevFavorite => !prevFavorite)
-        }
-
-        
-
+// SOME OF THE CODE:
+export default function Contact(whatever) { // props
+    console.log(whatever) // props
     return (
-        <main>
-            <div>
-                <h1>This is Working!</h1>
-                <div className="podcast-previews">
-                {podcastsPreviewData.map(podcast => ( // parameter 'podcast' represents each item in the array during each iteration of the .map function
-                    <div key={podcast.id} className="podcast-preview">
-                        <img src={podcast.image} />                       
-                        <h2>{podcast.title}</h2>
-                        <p>{podcast.description.split(' ').slice(0, 20).join(' ')}...</p> {/* 'split' splits description into array of individual words. 'slice 0,20' extract first 20 words from array, which we join back together. Then append with '...' */}
-                        <p>Seasons: {podcast.seasons}</p>
-                        <p>Genres: {podcast.genres.map(genreId => genreMapping[genreId]).join(', ')}</p>
-                        <p>Updated: {podcast.updated}</p>
-                        {/* add preview button here */}
-                        {/* also need to add a isFavorite property that can be true or false */}
-                        
-
-                        
-                        <img 
-                            // src="{`./${heartIcon}`}"
-                            // src={podcast.isFavorite ? "./filled-heart-icon.png" : "./empty-heart-icon.png"}
-                            onClick={toggleFavorite}
-                            className="favorite--icon"
-                        />
-
-                        {/* test */}
-                        <div>
-                            {/* {isFavorite && <img src="./filled-heart-icon.png" onClick={toggleFavorite} />}
-                            {!isFavorite && <img src="./empty-heart-icon.png" onClick={toggleFavorite} />} */}
-
-                            {/* if isFavorite is true, then display filled heart, otherwise empty heart */}
-                            <img onClick={toggleFavorite} src={isFavorite ? "./filled-heart-icon.png" : "./empty-heart-icon.png"} />
-
-
-                        </div>
-
-
-                        <img 
-                            className="preview--button"
-                            onClick={previewButton}
-                            src="./preview-play-button.png"    
-                        />   
-                    </div>
-                ))}
-                </div>
+        <div className="contact-card">
+            <img src="./images/mr-whiskerson.png"/>
+            <h3>Mr. Whiskerson</h3>
+            <div className="info-group">
+                <img src="./images/phone-icon.png" />
+                <p>(212) 555-1234</p>
             </div>
-            
+
+CONSOLE:
+{image: "./images/mr-whiskerson.png", name: "Mr. Whiskerson", phone: "(212) 555-1234", email: "mr.whiskaz@catnap.meow"}
+›{img: "./images/fluffykins.png", name: "Fluffykins", phone: "(212) 555-2345", email: "fluff@me.com"}
+›{img: "./images/felix.png", name: "Felix", phone: "(212) 555-4567", email: "thecat@hotmail.com"}
+›{img: "./images/pumpkin.png", name: "Pumpkin", phone: "(0800) CAT KING", email: "pumpkin@scrimba.com"}
+```
+And thats why we access these properties using for example "whatever.img" (usually the name "props" is used instead of whatever)
+
+## .map lesson
+https://scrimba.com/learn/learnreact/review-array-map-co4f44cfb9e4575776dc759eb
+
+IMPORTANT TO UNDERSTAND: you use .map to access specific items from data that may contain multiple items. These items are assigned unique keys. 
+
+This is the correlation between ".map" & "key=" as they will be used together.
+
+## key prop lesson
+Used to access a specific item/show/person that's assigned a unique key
+e.g., key={props.id} 
+https://scrimba.com/learn/learnreact/project-key-prop-cod824954b2c1feecf545bc49
+
+## display "sold out" badge on only specific items
+https://scrimba.com/learn/learnreact/project-sold-out-badge-cod6a41078bdec8db3c39513b
+
+## lesson 25: spread operator
+```js
+<Card
+    key={item.id}
+    {...item} // spread operator
+    
+/>
+ ```
+
+ ## We started learning about state - Meme generator, lesson 11
+
+ ## REVISE STATE:
+LESSON 11: FIRST STATE LESSONS
+```JS
+/** first value (result) is the default value for state variable, and the 2nd value (the function) is how you want to change the state - which becomes the new verSion of state */
+React.useState("Hello")
+           console.log(result) // displays: ["Hello", ƒ()]
          
-        </main>
-    )
-
-}
-
 ```
 
+LESSON 13: DESTRUCTURING
+```JS
+const [sayHello, func] = React.useState("Hello")
+            console.log(sayHello) // displays: Hello
+```
 
+LESSON 13: CHANGING STATE
+```JS
+// normal variable way:
+let isImportant = "Yes"
+isImportant = "No" // (can do this with variables.. but not state!)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-SIMPLIFIED MAIN.JSX FOR CHATGPT
+// state way: 
+const [isImportant, func] = React.useState("Yes")
+    isImportant = "No" (can't do it like this!)
+             
+// instead, we are given a 'func' that allows us to make these changes. Name convention: set(+ variable name we called our state)
+const [isImportant, setIsImportant] = React.useState("Yes")
+    setIsImportant("No") // whatever value we provide is going to be the new version of state
+```
+THIS ^ WON'T ACTUALLY WORK, it's just an example to show how we change state, because you would actually do it like this:
 ```js
-import React from "react"
-
-export default function Main() {
-    // *1*
-    const [podcastsPreviewData, setPodcastsPreviewData] = React.useState([])
+    const [isImportant, setIsImportant] = React.useState("Yes")
     
-    React.useEffect(() => { 
-        fetch("https://podcast-api.netlify.app/shows") 
-            .then(res => res.json()) 
-            .then(data => {
-                const podcastsDataWithFavorites = data.map(podcast => ({
-                ...podcast,
-                isFavorite: false,
-            }));
-            setPodcastsPreviewData(podcastsDataWithFavorites);
-        });
-}, []);
-        // *1* Instead of using a single isFavorite state variable, you should update your code to store the favorite state for each podcast individually. One way to do this is to update your podcastsPreviewData array to include an isFavorite property for each podcast. Then, you can use that property to toggle the favorite status for each specific podcast.
-        const [isFavorite, setIsFavorite] = React.useState(false)
-        
-        function toggleFavorite(id) {
-            setPodcastsPreviewData(prevData => {
-                return prevData.map(podcast => {
-                    if (podcast.id === id) {
-                        return {
-                            ...podcast,
-                            isFavorite: !podcast.isFavorite,
-                        };
-                    }
-                    return podcast;
-                });
-            });
-        }
-
-
+    function handleClick() {
+        setIsImportant("No")
+    }
+    
     return (
-        <main>
-            <div>
-            <h1>This is Working!</h1>
-            <div className="podcast-previews">
-                {podcastsPreviewData.map(podcast => (
-                <div key={podcast.id} className="podcast-preview">
-                    <img src={podcast.image} alt={podcast.title} />
-                    <h2>{podcast.title}</h2>
-                    <p>{podcast.description.split(' ').slice(0, 20).join(' ')}...</p>
-                    <p>Seasons: {podcast.seasons}</p>
-                    <p>Updated: {podcast.updated}</p>
-                    <img
-                    onClick={() => toggleFavorite(podcast.id)}
-                    src={podcast.isFavorite ? "./filled-heart-icon.png" : "./empty-heart-icon.png"}
-                    />
-                    <img
-                    className="preview--button"
-                    onClick={previewButton}
-                    src="./preview-play-button.png"
-                    />
-                </div>
-                ))}
+            <div onClick={handleClick}> // updates the text once clicked
+                <h1>{isImportant}</h1> // this is the text to display
             </div>
-            </div>
-        </main>
-        );
-
+        </div>
+    )
 ```
+            
