@@ -4,16 +4,14 @@ import Main from "./components/Main"
 import Sidebar from "./components/Sidebar"
 import PodcastCard from "./components/PodcastCard"
 import './App.css'
-import Footer from "./components/Footer"
 
 export default function App() {
   return (
-    <div>
-      <Header />
-      <Main />
-      {/* <Sidebar /> */}
+    <div className="right-sidebar-flexbox">
+      <Header className="header" />
+      <Main className="main-content"/>
+      <Sidebar className="right-sidebar" />
       {/* <PodcastCard.jsx /> Only display if user clicks on a specific podcast -> conditional rendering -> something  like: only render if *this* exists using && -> my attempt: onClick={<PodcastCard.jsx />} && {<PodcastCard.jsx />}*/}
-      {/* <Footer /> */}
     </div>
   )
 }

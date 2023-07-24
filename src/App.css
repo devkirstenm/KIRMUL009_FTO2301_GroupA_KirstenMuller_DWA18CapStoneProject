@@ -5,10 +5,10 @@
 
 /* HEADER.JSX */
 
-.header {
+/* .header {
     display: flex;
     align-items: center;
-}
+} */
 
 .header--logo {
     width: 50px; 
@@ -66,21 +66,41 @@
 
 .open--preview--button {
   /* width: 50px; this doesnt work for some reason. it only works if you move the img to under the h1 "this is working" */
-  max-width: 10%;
+  max-width: 30%;
   /* 1 */
   position: absolute;
+  top: 180px;
+  left: 180px;
 }
 
 .open--preview--button:hover {
-  max-width: 11.5%;
+  max-width: 40%;
 }
 
 .favorite--icon {
-  max-width: 8%;
-  margin-left: 250px;
-  /* margin-bottom: 100%; not working */
+  max-width: 12%;
+  position: absolute;
+  top: 300px;
+  left: 250px;
 }
 
+.preview--image {
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+.podcast--image {
+  position: relative;
+  top: 0;
+  left: 0;
+}
+/*
+"podcast--image" />  
+                       
+"open--preview--button"
+                            
+*/
 
 
 
@@ -150,14 +170,57 @@ sidebar.css
 }
 
 /* Styles for the main content area */
-.main-content {
-  width: 75%; /* Adjust this value to match the remaining 3/4th of the page width */
-  margin-left: 25%; /* Important: Add a margin equal to the width of the sidebar */
-  /* This ensures that the main content doesn't overlap with the sidebar */
-}
+/* .main-content {
+  width: 75%; 
+  margin-left: 25%; 
+} */
 
 /* Optional: Add a border to visually separate the sidebar from the main content */
 /* Adjust the border color, size, and style as per your preference */
 .main-container {
   border-left: 1px solid #ccc;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Layout Test by Matthew James Taylor: Right Sidebar Responsive 2-Column Layout (CSS Grid & Flexbox) */
+/* flexbox container */
+.right-sidebar-flexbox {
+  display:flex;
+  flex-wrap:wrap;
+}
+
+/* columns (mobile) */
+.right-sidebar-flexbox > * {
+  width:100%;
+}
+
+/* tablet breakpoint */
+@media (min-width:768px) {
+  .right-sidebar-flexbox > .right-sidebar {
+      width:calc(100% / 3);
+  }
+  .right-sidebar-flexbox > .main-content {
+      width:calc(100% / 3 * 2);
+  }
 }

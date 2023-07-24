@@ -154,4 +154,185 @@ THIS ^ WON'T ACTUALLY WORK, it's just an example to show how we change state, be
         </div>
     )
 ```
-            
+
+LET'S TAKE THIS ^ FURTHER & ACTUALLY CHANGE STATE BY MAKING A COUNTER THAT CAN ADD AND SUBTRACT 
+```JS
+    const [count, setCount] = React.useState(0)
+    
+    function add() {
+        setCount(count + 1)
+    }
+    
+    function subtract() {
+        setCount(count - 1)
+    }
+    
+    return (
+        <div className="counter">
+            <button className="counter--minus" onClick={subtract}>–</button>
+            <div className="counter--count">
+                <h1>{count}</h1>
+            </div>
+            <button className="counter--plus" onClick={add}>+</button>
+        </div>
+    )
+}
+```
+
+THIS HOWEVER ISN'T THE CONVENTION TO CHANGE STATE ^. IT WILL WORK BUT THERE IS A BETTER WAY:
+
+BY PROVIDING A CALLBACK FUNCTION...
+```setCount(function() { ``
+... AS THE PARAMETER OF THE SETTER FUNCTION.
+
+THIS REQUIRES A RETURN STATEMENT...
+```return ```
+... THAT STATES WHAT YOU WANT THE NEW VERSION OF STATE TO BE.
+
+```js
+    function add() {
+        setCount(function() {
+            return count + 1
+        })
+```
+
+HOWEVER: ANYTIME WE NEED TO USE OUR 'OLD STATE VALUE' TO DETERMINE OUR 'NEW STATE VALUE', IF WE USE A pass a function
+```js
+setCount(function() { 
+    return 
+```
+REACT WILL PASS THIS FUNCTION THE OLD VALUE AS THE PARAMETER, WHICH WE CAN USE AS OUR REFERENCE TO THE OLD STATE
+```JS
+    function add() {
+        setCount(function(oldValue) {
+            return oldValue + 1
+        })
+```
+
+YOU CAN SIMPLIFY THIS USING AN ARROW FUNCTION
+```JS    
+function add() {
+        setCount(oldValue => oldValue + 1) // given the old value, return old value + 1
+    }
+```
+
+REGARDING NAMING CONVENTIONS: HE NORMALLY USES 'prevCount' instead of 'oldValue'. YOU CAN NAME THIS PARAMETER ANYTHING YOU LIKE.
+
+YOU DON'T ALWAYS HAVE TO USE THE OLD VALUE IF ITS NOT NEEDED. YOU CAN ALSO JUST EXPLICITLY STATE WHAT YOU WANT STATE TO BE
+```JS
+    function addItem() {
+        // We'll work on this next
+        setThingsArray(<new value>)
+    }
+    
+    or provide a callback function which would receive the old version of state to use to determine the new version of state
+
+        function addItem() {
+        // We'll work on this next
+        setThingsArray(<callback function>)
+    }
+```
+
+PASSING STATE AS PROPS
+```JS
+// Count.js
+import React from "react"
+
+export default function Count(props) {
+    return (
+        <div >
+            <h1>{props.number}</h1>
+        </div>
+    )
+}
+
+// App.js
+
+export default function App() {
+    const [count, setCount] = React.useState(0) // sets count to 0
+    
+    function add() {
+        setCount(prevCount => prevCount + 1) // increases count
+    }
+    
+    function subtract() {
+        setCount(prevCount => prevCount - 1) // decreases count
+    }
+
+    return (
+        <div className="counter">
+            <button  onClick={subtract}>–</button>
+            <Count number={count} /> // counter
+            <button  onClick={add}>+</button>
+        </div>
+    )
+}
+```
+
+SETTING STATE FROM CHILD COMPONENTS (using project example to unfavorite a podcast)
+
+Setting state from child components lesson - apply to your remove from favorites button. 
+This lesson is about passing state-setter functions such as "toggleFavorite" from parent to child components
+
+Apply: when i press 'x' on a specific podcast in sidebar.jsx, the 
+1- podcast must be removed from sidebar.jsx and the 
+2- heart must get unfilled in main.jsx.
+
+
+```js
+// SIDEBAR.JSX
+export default function Star(props) {
+    const starIcon = props.isFilled ? "star-filled.png" : "star-empty.png"
+    return (
+        <img 
+            src={`../images/${starIcon}`} 
+            className="card--favorite"
+            onClick={props.handleClick}
+        />
+    )
+}
+
+// MAIN.JSX
+export default function App() {
+    const [contact, setContact] = React.useState({
+        firstName: "John",
+        lastName: "Doe",
+        phone: "+1 (719) 555-1212",
+        email: "itsmyrealname@example.com",
+        isFavorite: true
+    })
+    
+    function toggleFavorite() {
+        setContact(prevContact => ({
+            ...prevContact,
+            isFavorite: !prevContact.isFavorite
+        }))
+    }
+    
+    return (
+        <main>
+            // other properties go here
+            <Star isFilled={contact.isFavorite} handleClick={toggleFavorite} />
+        </main>
+    )
+}
+```
+
+PASSING DATA AROUND (* fullscreen view only)
+This lesson is about passing state from parent to children components. 
+
+                                                                        App.jsx
+
+                            Main.jsx                                                        Sidebar.jsx
+                    - has isFavorite state & you 
+                    can now pass props to children
+
+	
+    ShowAllPodcasts.jsx                  PreviewThisPodcast.jsx
+-(passed state to parent)        - when you fav a podcast it should go here
+			  
+This means you may have to change your components to contain another parent component like this:
+App.jsx
+	Main.jsx                            
+		Homepage.jsx, SelectedPodcast.jsx
+
