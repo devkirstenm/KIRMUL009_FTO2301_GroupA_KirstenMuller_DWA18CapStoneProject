@@ -125,7 +125,6 @@ export default function Main() {
             ))}
             </div>
 
-            {/* <button onClick={() => handlePodcastSelection(podcast.id)}>Select Podcast</button> */}
             {selectedPodcast && (
                 <div className={`modal--overlay ${selectedPodcast ? '' : 'hidden'}`}>
                     <div className="modal--content">
@@ -137,21 +136,27 @@ export default function Main() {
                         <div>
                             <h3>Seasons:</h3>
                             {selectedPodcast.seasons.map(season => (
-                            <div key={season.season}>
-                                <p>{`Season ${season.season}: ${season.title}`}</p>
-                                <img src={season.image} className="selected--podcast--season--image"/>
-                                {/* Render episodes here if needed */}
-                                {/* {season.episodes.map(episode => (
-                                <div key={episode.id}>
-                                    <p>{episode.title}</p>
-                                    {/* Add more episode details as needed */}
-                                {/* </div>
-                                ))} */}
-                            </div>
+                                <div key={season.season}>
+                                    <p>{season.title}</p>
+                                    <img src={season.image} className="selected--podcast--season--image"/>
+
+                                        {/* Display the episodes*/}
+                                        <div>
+                                            <h4>Episodes:</h4>
+                                            {season.episodes.map(episode => ( // for each episode, return...
+                                                <div key={episode.episode}>
+                                                    <p>{`Episode ${episode.episode}: ${episode.title}`}</p>
+                                                    <p>{episode.description}</p>
+                                                    <p>{episode.file}</p>
+                                                </div>
+                                            ))}
+                                        </div>
+                                </div>
                             ))}
                         </div>
 
-                        {/* <p>{selectedPodcast.seasons}</p> */}
+                        
+
                     </div>
                 </div>
                 )}
