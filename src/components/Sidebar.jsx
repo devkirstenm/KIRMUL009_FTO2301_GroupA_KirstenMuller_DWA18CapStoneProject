@@ -4,9 +4,6 @@
 import React from "react"
 
 export default function Sidebar() {
-
-
-
     /** ----------------------------------------------------------------------
      * FAVORITES SECTION:
      * ----------------------------------------------------------------------
@@ -31,7 +28,7 @@ export default function Sidebar() {
                                 <button className="counter--plus" onClick={add}>+</button>
                             </div>
                 */
-    }
+    
 
     function decreaseFavorites() {
         setFavoritesCount(prevFavoritesCount => prevFavoritesCount - 1)
@@ -52,7 +49,40 @@ export default function Sidebar() {
                 ]
         })
     }
+    function ShowSignUpForm() {
+        const [showSignUpForm, setShowSignUpForm] = React.useState(false);
+          
+        // (*3*) (sign up form)
+        const [signUp, setSignUp] = React.useState({
+            email: "",
+            password: "",
+        })
 
+        // (*3*) (sign up form)
+        function handleChange(event) {
+            // from the event, i am pulling out the properties: name, value, type
+            const {name, value, type, checked} = event.target // we get these properties from event.target
+            // access previous form data & return an object
+            setFormData(prevFormData => ({
+                // object should have all of the properties of the previous form data...
+                ...prevFormData,
+                // .... and we'll update the property based on the 'name' value. 
+                [name]: value // updates the value property (to whatever the user types)
+            })) 
+        }
+        console.log(formData) // (must confirm) displays: {email: "cat@gmail.com", password: "asdf"}
+        
+        // (*3*) (sign up form) - what happens when the form submits:
+        function handleSubmit(event) {
+            event.preventDefault()
+            console.log("Successfully signed up")
+            // (action required!) put logic here to handle what happens when user presses sign up
+        }
+
+        function handleLoginIconClick() {
+            setShowSignUpForm(!showSignUpForm); // toggles the value when login icon is clicked
+          }
+    }
     /**
      * ----------------------------------------------------------------------
      * MEDIA PLAYER SECTION:
@@ -66,9 +96,31 @@ export default function Sidebar() {
                 <h1 className="favorites--text">Favorites</h1>
                 <div className="nav--items">
                     <img src="./gear-icon.png" className="settings--icon"/>
-                    <img src="./login-icon.png" className="login--icon" />
+                    <img src="./login-icon.png" className="login--icon" onClick={handleLoginIconClick}/>
                 </div>
-            </nav>
+                </nav>
+                {/* (*3*) (sign up form) - only display when login-icon is pressed */}
+                {/* Conditional rendering based on showSignUpForm */}
+                {showSignUpForm && (
+                    <form onSubmit={handleSubmit} >
+                        <input 
+                            type="email" 
+                            placeholder="Email address"
+                            className="form--input"
+                            name="email"
+                            onChange={handleChange}
+                            value={formData.email}
+                        />
+                        <input 
+                            type="password" 
+                            placeholder="Password"
+                            className="form--input"
+                            name="password"
+                            onChange={handleChange}
+                            value={formData.password}
+                        />
+                        <button>Sign up</button> {/* because the button is inside the <form>, it acts as a submit button automatically. So clicking "sign up" will trigger the submit event on the form, and therefore will run the 'handleSubmit' function*/}
+                    </form>
             {/* <h2>Amount of favorites: {favoritesCount}</h2>  */}
             <h2 className="favorites--amount--text">Favorites: 0</h2>
             {/* this is where the logic for the favorites will go. Don't know if this is correct below. It will contain a scroll to scroll all your favorites.*/}
@@ -85,5 +137,7 @@ export default function Sidebar() {
             <div>
                 <h1>This is a container for where the audio player goes</h1>
             </div>
+            
         </aside>
     )
+}

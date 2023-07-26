@@ -1,4 +1,4 @@
-//  User can mark specific episodes as favourites to find them again
+//  User can mark specific episodes as favorites to find them again
 import React from "react"
 
 export default function Main() {
@@ -9,33 +9,35 @@ export default function Main() {
      * flip state back & forth: lesson 19 of meme generator
      */
     const [mainDisplay, setMainDisplay] = React.useState(true)
-    function changeDisplay() { // i think this is like the openpreview function maybe?
+    function changeDisplay() { // i think this is like the open preview function maybe?
         // setMainDisplay(prevDisplay => ) // return homepage, or if user clicked on specific podcast return the podcast info
     }
 
     // Homepage of previews
-    const [podcastsPreviewData, setPodcastsPreviewData] = React.useState([])
-    // [[podcastsPreviewData]]
+    const [allPodcastsView, setAllPodcastsView] = React.useState([])
+    // [[allPodcastsView]]
 
-    React.useEffect(function() { // to manage side effects issues
-        console.log("effect ran! well done")
+    React.useEffect(() => { // to manage side effects issues (code that affects an outside system)
+        // callback function:
         fetch("https://podcast-api.netlify.app/shows") // fetch request to the previews of all the shows
             .then(res => res.json()) // fetch receives a response in json, which we convert to a js object so we can access its properties (id, image etc.)
-            .then(data => setPodcastsPreviewData(data))
-    })
+            .then(data => setAllPodcastsView(data))
+    // need to provide 2nd parameter (dependencies array) to React.useEffect, to stop the rerender issue
+    }, []) // empty []: means i want this callback function to run once, & there's no dependencies [] to watch to trigger it to run again
+    // NOTE: if you do need it to run again: watch this https://scrimba.com/learn/learnreact/useeffect-dependencies-array-co4fc423992f2d9737eaa55f2 & https://scrimba.com/learn/learnreact/useeffect-for-fetching-data-cof924a3f92d4ca7648780a8d
 
+    // ------------------------------------
     // when user clicks to open a podcast
-    const [selectedPodcast, setSelectedPodcast] = React.useState([])
 
-    React.useEffect(function() {
-    fetch("https://podcast-api.netlify.app/id/<ID>")
+    const [selectedPodcast, setSelectedPodcast] = React.useState(null);
+    // NOTE FROM Chat GPT: The initial value of selectedPodcast should be set to null instead of undefined, since it will be updated with an object (the data fetched from the API) later on.
+    
+    const handlePodcastSelection = (id) => {
+        // Fetch the data for the selected podcast using the provided ID
+        fetch(`https://podcast-api.netlify.app/id/${id}`)
         .then(res => res.json())
         .then(data => setSelectedPodcast(data))
-    })
-
-    function changeMainDisplay() { // when user clicks on a specific podcast, changeMainDisplay to selectedPodcast
-        setMainDisplay(selectedPodcast)
-    }
+    };
 
     // -------------------------------------------------------
 
@@ -54,7 +56,7 @@ export default function Main() {
     
     // favorite icon on  previews (either filled or empty heart)
     // lesson 22 talks about a favorite/unfavorite button
-    // let heartIcon = podcast.isFavorite === false ? "empty-heart-icon.png" : "filled-heart-icon.png" // set to false so that its automatically unfavorited
+    // let heartIcon = podcast.isFavorite === false ? "empty-heart-icon.png" : "filled-heart-icon.png" // set to false so that its automatically unfavorite
 
     const [isFavorite, setIsFavorite] = React.useState(false)
 
@@ -72,29 +74,25 @@ export default function Main() {
         console.log("Preview button was hovered over!") 
     }
 
-    // this button must be pressed to open the previews
-    function openPreview() {
-        console.log("Open Preview button was clicked!") // working!
-        const previewsArray = previewsData.data.preview
-        setPodcastsPreviewData() // set what you want to display instead
-        // CAN'T DO THIS YET, BECAUSE YOU NEED TO DO API CALL. WHEN YOU GET TO API LESSON, apply this:
-            // do api call to: https://podcast-api.netlify.app/id/<ID>
-            // <ID> indicates where the dynamic ID for the requested item should be placed
-            // in here, "file" is where you get the music from
-                /** EXAMPLE 
-                 * const memesArray = memesData.data.memes
-                 * const randomNumber = Math.floor(Math.random() * memesArray.length)
-                 * const url = memesArray[randomNumber].url
-                 * console.log(url)
-                 */ 
-
-        }
 
     return (
         <main>
             <h1>This is Working!</h1>
+            {/* sorting options */}
+            <form>
+                <label htmlFor="sorting">Sort by:</label>
+                <br />
+                <select id="sorting">
+                    <option value="a-z">A-Z</option>
+                    <option value="z-a">Z-A</option>
+                    <option value="genre">Genre</option>
+                    <option value="date-newest-first">Data: Newest first</option>
+                    <option value="date-oldest-first">Date: Oldest first</option>
+                </select>
+            </form>
+            {/* display all podcasts */}
             <div className="podcast-previews">
-            {podcastsPreviewData.map(podcast => ( // parameter 'podcast' represents each item in the array during each iteration of the .map function (see README.md for more of an explanation)
+            {allPodcastsView.map(podcast => ( // parameter 'podcast' represents each item in the array during each iteration of the .map function (see README.md for more of an explanation)
                 <div key={podcast.id} className="podcast-preview">
                     <div className="preview--image">
                         <img onMouseOver={hoverPreview} src={podcast.image} className="podcast--image" />  
@@ -102,13 +100,14 @@ export default function Main() {
                         <img 
                             className="open--preview--button"
                             onMouseOver={hoverPreviewButton}
-                            onClick={openPreview}
+                            // onClick={openPreview}
                             src="open-preview-button.png"    
+                            onClick={() => {console.log(podcast.id), handlePodcastSelection(podcast.id)}}
                         />  
                         {/* FAVORITES BUTTON */}
                         <img onClick={toggleFavorite} className="favorite--icon" src={isFavorite ? "./filled-heart-icon.png" : "./empty-heart-icon.png" } />
                         {/* (*5*) UNFAVORITE PODCAST (user clicks "x" icon from sidebar.jsx) */}
-                        <Sidebar xClicked={podcastsPreviewData.isFavorite} handleClick={toggleFavorite} />
+                        {/* <Sidebar xClicked={allPodcastsView.isFavorite} handleClick={toggleFavorite} /> */}
                     </div>                    
                     <h2>{podcast.title}</h2>
                     <p>{podcast.description.split(' ').slice(0, 20).join(' ')}...</p> {/* 'split' splits description into array of individual words. 'slice 0,20' extract first 20 words from array, which we join back together. Then append with '...' */}
@@ -142,19 +141,25 @@ export default function Main() {
                 </div>
                 
             ))}
+
             </div>
+            <button onClick={() => handlePodcastSelection(podcast.id)}>Select Podcast</button>
+            {selectedPodcast && (
+            <div>
+                <p>{selectedPodcast.title}</p>
+                <p>{selectedPodcast.image}</p>
+                <p>{selectedPodcast.description}</p>
+                <p>{selectedPodcast.seasons}</p>
+            </div>
+            )}
+        
             <footer className="footer">
             <h1> © 2023 devkirstenm development. All rights reserved.</h1>
             </footer>
         </main>
     )
-    // SEE 'const mainDisplay' ! this has to do with that
-        // return (
-        //     <div>
-        //       {selectedPodcast ? renderPodcastPreview() : renderHomepage()}
-        //     </div>
-        //   );
-
 }
+// regarding the "selectedPocast" - the .map was removed
+// "Based on the fetch logic, it seems like selectedPodcast would contain a single podcast object, not an array of objects. So, the map function is unnecessary. You can directly render the properties of the selected podcast."
 
 

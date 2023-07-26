@@ -336,3 +336,7 @@ App.jsx
 	Main.jsx                            
 		Homepage.jsx, SelectedPodcast.jsx
 
+
+
+IMPLEMENT A DARK MODE/ LIGHT MODE
+https://scrimba.com/learn/learnreact/dynamic-styles-co57845e4a49eb86d4414b0fd
