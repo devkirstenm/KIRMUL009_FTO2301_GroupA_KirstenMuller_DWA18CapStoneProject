@@ -32,13 +32,19 @@ export default function Main() {
     const [selectedPodcast, setSelectedPodcast] = React.useState(null);
     // NOTE FROM Chat GPT: The initial value of selectedPodcast should be set to null instead of undefined, since it will be updated with an object (the data fetched from the API) later on.
     
-    const handlePodcastSelection = (id) => {
-        // Fetch the data for the selected podcast using the provided ID
-        fetch(`https://podcast-api.netlify.app/id/${id}`)
-        .then(res => res.json())
-        .then(data => setSelectedPodcast(data))
-    };
-
+    const handlePodcastSelection = async (id) => {
+        try {
+          // Fetch the data for the selected podcast using the provided ID
+          const response = await fetch(`https://podcast-api.netlify.app/id/${id}`);
+          const data = await response.json();
+          console.log("Fetched data:", data);
+          setSelectedPodcast(data);
+        } catch (error) {
+          // Handle any errors that occur during the fetch
+          console.error('Error fetching podcast:', error);
+        }
+      };
+      
     // -------------------------------------------------------
 
         // genre ids and their titles
@@ -90,6 +96,7 @@ export default function Main() {
                     <option value="date-oldest-first">Date: Oldest first</option>
                 </select>
             </form>
+
             {/* display all podcasts */}
             <div className="podcast-previews">
             {allPodcastsView.map(podcast => ( // parameter 'podcast' represents each item in the array during each iteration of the .map function (see README.md for more of an explanation)
@@ -97,13 +104,13 @@ export default function Main() {
                     <div className="preview--image">
                         <img onMouseOver={hoverPreview} src={podcast.image} className="podcast--image" />  
                         {/* SELECT PODCAST BUTTON */}
-                        <img 
+                        <button
                             className="open--preview--button"
                             onMouseOver={hoverPreviewButton}
-                            // onClick={openPreview}
-                            src="open-preview-button.png"    
-                            onClick={() => {console.log(podcast.id), handlePodcastSelection(podcast.id)}}
-                        />  
+                            onClick={() => handlePodcastSelection(podcast.id)}
+                            >
+                            <img src="open-preview-button.png" alt="Open Preview" />
+                        </button>
                         {/* FAVORITES BUTTON */}
                         <img onClick={toggleFavorite} className="favorite--icon" src={isFavorite ? "./filled-heart-icon.png" : "./empty-heart-icon.png" } />
                         {/* (*5*) UNFAVORITE PODCAST (user clicks "x" icon from sidebar.jsx) */}
@@ -114,44 +121,40 @@ export default function Main() {
                     <p>Seasons: {podcast.seasons}</p>
                     <p>Genres: {podcast.genres.map(genreId => genreMapping[genreId]).join(', ')}</p>
                     <p>Updated: {podcast.updated}</p>
-                    {/* add preview button here */}
-                    {/* also need to add a isFavorite property that can be true or false */}
-                    
-
-                    
-                    <img 
-                        // src="{`./${heartIcon}`}"
-                        // src={podcast.isFavorite ? "./filled-heart-icon.png" : "./empty-heart-icon.png"}
-                        // onClick={toggleFavorite}
-                        // className="favorite--icon"
-                    />
-
-                    <div>
-                        {/* {isFavorite && <img src="./filled-heart-icon.png" onClick={toggleFavorite} />}
-                        {!isFavorite && <img src="./empty-heart-icon.png" onClick={toggleFavorite} />} */}
-
-                        {/* if isFavorite is true, then display filled heart, otherwise empty heart */}
-                        {/* <img onClick={toggleFavorite} src={isFavorite ? "./filled-heart-icon.png" : "./empty-heart-icon.png"} /> */}
-
-
-                    </div>
-
-
-  
-                </div>
-                
+                </div> 
             ))}
+            </div>
 
-            </div>
-            <button onClick={() => handlePodcastSelection(podcast.id)}>Select Podcast</button>
+            {/* <button onClick={() => handlePodcastSelection(podcast.id)}>Select Podcast</button> */}
             {selectedPodcast && (
-            <div>
-                <p>{selectedPodcast.title}</p>
-                <p>{selectedPodcast.image}</p>
-                <p>{selectedPodcast.description}</p>
-                <p>{selectedPodcast.seasons}</p>
-            </div>
-            )}
+                <div className={`modal--overlay ${selectedPodcast ? '' : 'hidden'}`}>
+                    <div className="modal--content">
+                        <p>{selectedPodcast.title}</p>
+                        <img src={selectedPodcast.image} className="selected--podcast--image" />
+                        <p>{selectedPodcast.description}</p>
+
+                        {/* Display the seasons */}
+                        <div>
+                            <h3>Seasons:</h3>
+                            {selectedPodcast.seasons.map(season => (
+                            <div key={season.season}>
+                                <p>{`Season ${season.season}: ${season.title}`}</p>
+                                <img src={season.image} className="selected--podcast--season--image"/>
+                                {/* Render episodes here if needed */}
+                                {/* {season.episodes.map(episode => (
+                                <div key={episode.id}>
+                                    <p>{episode.title}</p>
+                                    {/* Add more episode details as needed */}
+                                {/* </div>
+                                ))} */}
+                            </div>
+                            ))}
+                        </div>
+
+                        {/* <p>{selectedPodcast.seasons}</p> */}
+                    </div>
+                </div>
+                )}
         
             <footer className="footer">
             <h1> © 2023 devkirstenm development. All rights reserved.</h1>
@@ -159,7 +162,3 @@ export default function Main() {
         </main>
     )
 }
-// regarding the "selectedPocast" - the .map was removed
-// "Based on the fetch logic, it seems like selectedPodcast would contain a single podcast object, not an array of objects. So, the map function is unnecessary. You can directly render the properties of the selected podcast."
-
-

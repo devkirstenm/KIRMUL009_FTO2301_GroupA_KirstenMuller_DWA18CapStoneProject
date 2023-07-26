@@ -103,6 +103,36 @@
 */
 
 
+/* MODAL */
+.modal--overlay {
+  position: absolute;
+  /* width: 100%; this makes it go over the right edge*/
+  height: 100%;
+  background-color: rgba(72, 99, 218, 0.6); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+}
+
+/* Apply the 'display: none;' to hide the modal by default */
+.modal--overlay.hidden {
+  display: none;
+}
+
+.modal--content { /* styling for all content of clicked podcast*/
+  text-align: center; 
+}
+
+.selected--podcast--image {
+  max-width: 300px;
+}
+
+.selected--podcast--season--image {
+  max-width: 150px;
+}
+
 
 SIDEBAR
 .sidebar {
@@ -158,7 +188,6 @@ SIDEBAR
 
 
 
-
 /* STILL TO DO! MAIN.JSX & SIDEBAR.JSX STYLING FROM CHATGPT */
 sidebar.css
 
@@ -167,13 +196,8 @@ sidebar.css
 /* Adjust this width if you want a different width for your sidebar */
 .main-container {
   display: flex;
+  height: 100%;
 }
-
-/* Styles for the main content area */
-/* .main-content {
-  width: 75%; 
-  margin-left: 25%; 
-} */
 
 /* Optional: Add a border to visually separate the sidebar from the main content */
 /* Adjust the border color, size, and style as per your preference */
@@ -202,25 +226,3 @@ sidebar.css
 
 
 
-
-/* Layout Test by Matthew James Taylor: Right Sidebar Responsive 2-Column Layout (CSS Grid & Flexbox) */
-/* flexbox container */
-.right-sidebar-flexbox {
-  display:flex;
-  flex-wrap:wrap;
-}
-
-/* columns (mobile) */
-.right-sidebar-flexbox > * {
-  width:100%;
-}
-
-/* tablet breakpoint */
-@media (min-width:768px) {
-  .right-sidebar-flexbox > .right-sidebar {
-      width:calc(100% / 3);
-  }
-  .right-sidebar-flexbox > .main-content {
-      width:calc(100% / 3 * 2);
-  }
-}
