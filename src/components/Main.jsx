@@ -1,5 +1,7 @@
 //  User can mark specific episodes as favorites to find them again
 import React from "react"
+import { format } from 'date-fns';
+
 
 export default function Main() {
     // ----------------------------------------------
@@ -80,12 +82,14 @@ export default function Main() {
         console.log("Preview button was hovered over!") 
     }
 
+    // return statements:
 
     return (
         <main>
-            <h1>This is Working!</h1>
+            <h1 className="recommendations--title" >Top Picks!</h1>
+            <h2 className="recommendations--subtitle" >Podcast recommendations just for you</h2>
             {/* sorting options */}
-            <form>
+            <form className="sorting--options">
                 <label htmlFor="sorting">Sort by:</label>
                 <br />
                 <select id="sorting">
@@ -120,7 +124,7 @@ export default function Main() {
                     <p>{podcast.description.split(' ').slice(0, 20).join(' ')}...</p> {/* 'split' splits description into array of individual words. 'slice 0,20' extract first 20 words from array, which we join back together. Then append with '...' */}
                     <p>Seasons: {podcast.seasons}</p>
                     <p>Genres: {podcast.genres.map(genreId => genreMapping[genreId]).join(', ')}</p>
-                    <p>Updated: {podcast.updated}</p>
+                    <p>Updated: {format(new Date(podcast.updated), "d MMMM yyyy, HH:mm a")}</p>
                 </div> 
             ))}
             </div>
@@ -167,3 +171,4 @@ export default function Main() {
         </main>
     )
 }
+

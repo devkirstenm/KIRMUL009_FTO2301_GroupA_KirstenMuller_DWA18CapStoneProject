@@ -34,7 +34,7 @@ export default function Header() {
                     // if setSearchQuery matches any podcast title, display those podcasts
                     // setSearchQuery === {podcast.title} ? ......
                 />
-                <button>🔍︎</button> {/* (*2*) because this button is found instead a form element, when pressed, it will automatically trigger the forms "onSubmit" event handler */} 
+                <button className="search--bar--button">🔍︎</button> {/* (*2*) because this button is found instead a form element, when pressed, it will automatically trigger the forms "onSubmit" event handler */} 
             </form>
         </header>
     )
