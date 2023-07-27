@@ -119,12 +119,14 @@ export default function Main() {
                         <img onClick={toggleFavorite} className="favorite--icon" src={isFavorite ? "./filled-heart-icon.png" : "./empty-heart-icon.png" } />
                         {/* (*5*) UNFAVORITE PODCAST (user clicks "x" icon from sidebar.jsx) */}
                         {/* <Sidebar xClicked={allPodcastsView.isFavorite} handleClick={toggleFavorite} /> */}
-                    </div>                    
-                    <h2>{podcast.title}</h2>
-                    <p>{podcast.description.split(' ').slice(0, 20).join(' ')}...</p> {/* 'split' splits description into array of individual words. 'slice 0,20' extract first 20 words from array, which we join back together. Then append with '...' */}
-                    <p>Seasons: {podcast.seasons}</p>
-                    <p>Genres: {podcast.genres.map(genreId => genreMapping[genreId]).join(', ')}</p>
-                    <p>Updated: {format(new Date(podcast.updated), "d MMMM yyyy, HH:mm a")}</p>
+                    </div >  
+                    <div className="preview--text">     
+                        <h2>{podcast.title}</h2>
+                        <p>{podcast.description.split(' ').slice(0, 20).join(' ')}...</p> {/* 'split' splits description into array of individual words. 'slice 0,20' extract first 20 words from array, which we join back together. Then append with '...' */}
+                        <p><span class="preview--bold--text">Seasons:</span> {podcast.seasons}</p>
+                        <p><span class="preview--bold--text">Genres:</span> {podcast.genres.map(genreId => genreMapping[genreId]).join(', ')}</p>
+                        <p><span class="preview--bold--text">Updated:</span> {format(new Date(podcast.updated), "d MMMM yyyy, HH:mm a")}</p>
+                    </div> 
                 </div> 
             ))}
             </div>

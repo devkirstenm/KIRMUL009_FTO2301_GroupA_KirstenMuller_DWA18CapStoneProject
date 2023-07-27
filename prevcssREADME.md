@@ -1,3 +1,6 @@
+THIS IS MY ORIGINAL CSS FILE INCASE YOU NEED IT AGAIN
+
+```CSS
 * {
     box-sizing: border-box;
     background-color: #E4E5E7;
@@ -17,34 +20,56 @@
   border-radius: 10px;
 }
 
+.header {
+  height: 120px;
+}
+
+.main { 
+  height: 300px;
+}
+
+@media all and (min-width: 800px){
+  .main{
+    flex: 3;
+  }
+
+  .aside{
+    order: 1;
+  }
+}
+
+@media all and (min-width: 600px){
+  .aside{
+    flex: 1;
+  }
+}
+
 /* HEADER.JSX */
 
 .header {
     display: flex;
     align-items: center;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
-    background: whitesmoke;
 }
 
 .header--logo {
     width: 50px; 
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-left: 20px;
     margin-bottom: 10px;
-    background: whitesmoke;
 }
 
 .header--title {
-    margin-top: 16px;
+    flex: 1;
+    text-align: center;
+    margin-right: 120px;
     color: rgb(0, 0, 0);
     font-family: 'Plus Jakarta Sans', sans-serif;
-    background: whitesmoke;
 }
 
 .search--bar {
   position: absolute;
-  top: 48px;
-  right:80px;
+  top: 23px;
+  right:170px;
   font-size: 22px;
   border-radius: 20px;
   padding: 0.5%;
@@ -54,18 +79,12 @@
 
 .search--bar--button {
   position: absolute;
-  top: 43px;
-  right: 40px;
-  background: whitesmoke;
-  border: none;
-  font-size: 25px;
+  top: 32px;
+  right: 130px;
 }
 
 /* MAIN.JSX */
-.main {
-  margin: auto;
-  
-}
+
 /* recommendations */
 .recommendations--title {
  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -82,8 +101,9 @@
 
 /* sort by */
 .sorting--options {
-  display: absolute;
-  margin-left: 0px;
+  display: flex;
+  align-items: center;
+
 }
 
 /*  for previews */
@@ -95,7 +115,7 @@
   .podcast-preview {
     width: 300px;
     margin: 10px;
-    padding: 14px;
+    padding: 10px;
   }
   
   .podcast-preview h2 {
@@ -118,30 +138,19 @@
     font-size: 14px;
   }
 
-  .open--preview--button {
-    width: 90px;
-    height: 90px;
-    border-radius: 50%; /* circular button*/
-    position: absolute;
-    top: 200px; /* Adjust the vertical position as needed */
-    left: 210px; /* Adjust the horizontal position as needed */
-    border: none; 
-    padding: 0; 
-  }
-  
-  .open--preview--button img {
-    /* Set the image to fill the button entirely */
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 50%; /* Make the image circular as well */
-  }
-  
-  .open--preview--button:hover {
-    /* Increase the size on hover if needed */
-    width: 100px;
-    height: 100px;
-  }
+.open--preview--button {
+  /* width: 50px; this doesnt work for some reason. it only works if you move the img to under the h1 "this is working" */
+  max-width: 30%;
+  /* 1 */
+  position: absolute;
+  top: 180px;
+  left: 180px;
+}
+
+.open--preview--button:hover {
+  max-width: 40%;
+}
+
 .favorite--icon {
   max-width: 12%;
   position: absolute;
@@ -155,19 +164,18 @@
   left: 0;
 }
 
-.preview--text {
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-}
-
-.preview--bold--text {
-  font-weight: bolder;
-}
-
 .podcast--image {
   position: relative;
   top: 0;
   left: 0;
 }
+/*
+"podcast--image" />  
+                       
+"open--preview--button"
+                            
+*/
+
 
 /* MODAL */
 .modal--overlay {
@@ -199,11 +207,70 @@
   max-width: 150px;
 }
 
+
+/* sidebar */
+
+.nav--bar {
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+
+}
+
+.favorites--text {
+  font-weight: bold;
+}
+
+.favorites--amount--text {
+  font-size: 20px;
+  color: #918E9B;
+}
+
+.nav--items {
+  /* margin-right: auto; */
+  list-style: none;
+  display: flex; /* displays items in a row (next to each other)*/
+  align-items: center;
+  margin-left: 10%;
+}
+
+  .settings--icon {
+    width: 6%;
+    padding: 5px;
+    /* height: auto; doesnt work */
+  
+  }
+
+  .login--icon {
+    width: 6%;
+
+  }
+
+  
+
 /* FOOTER */
 .footer {
-  font-size: 10px;
   display: flex; /* Sets the container to use Flexbox */
   justify-content: center; /* Horizontally centers the content */
+}
+
+
+
+/* STILL TO DO! MAIN.JSX & SIDEBAR.JSX STYLING FROM CHATGPT */
+sidebar.css
+
+/* Parent container for both the sidebar and the main content */
+/* Assuming you have a container for your main content with class "main-content" */
+/* Adjust this width if you want a different width for your sidebar */
+.main-container {
+  display: flex;
+  height: 100%;
+}
+
+/* Optional: Add a border to visually separate the sidebar from the main content */
+/* Adjust the border color, size, and style as per your preference */
+.main-container {
+  border-left: 1px solid #ccc;
 }
 
 
@@ -226,3 +293,5 @@
 
 
 
+
+```
