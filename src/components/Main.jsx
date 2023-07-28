@@ -2,18 +2,7 @@
 import React from "react"
 import { format } from 'date-fns';
 
-
 export default function Main() {
-    // ----------------------------------------------
-    // THIS SECTION IS A TEST TO SEE IF I CAN DISPLAY THE HOMEPAGE CORRECTLY SO  THAT WHEN YOU CLICK ON A PREVIEW IT DISPLAYS THE PREVIEW
-    /**
-     * FLIP BETWEEN HOMEPAGE OF PREVIEWS AND SELECTED PREVIEW
-     * flip state back & forth: lesson 19 of meme generator
-     */
-    const [mainDisplay, setMainDisplay] = React.useState(true)
-    function changeDisplay() { // i think this is like the open preview function maybe?
-        // setMainDisplay(prevDisplay => ) // return homepage, or if user clicked on specific podcast return the podcast info
-    }
 
     // Homepage of previews
     const [allPodcastsView, setAllPodcastsView] = React.useState([])
@@ -32,7 +21,7 @@ export default function Main() {
     // when user clicks to open a podcast
 
     const [selectedPodcast, setSelectedPodcast] = React.useState(null);
-    // NOTE FROM Chat GPT: The initial value of selectedPodcast should be set to null instead of undefined, since it will be updated with an object (the data fetched from the API) later on.
+    // The initial value of selectedPodcast should be set to null instead of undefined, since it will be updated with an object (the data fetched from the API) later on.
     
     const handlePodcastSelection = async (id) => {
         try {
@@ -62,10 +51,6 @@ export default function Main() {
             9: "Kids and Family"
         };
     
-    // favorite icon on  previews (either filled or empty heart)
-    // lesson 22 talks about a favorite/unfavorite button
-    // let heartIcon = podcast.isFavorite === false ? "empty-heart-icon.png" : "filled-heart-icon.png" // set to false so that its automatically unfavorite
-
     const [isFavorite, setIsFavorite] = React.useState(false)
 
     function toggleFavorite() {
@@ -161,9 +146,6 @@ export default function Main() {
                                 </div>
                             ))}
                         </div>
-
-                        
-
                     </div>
                 </div>
                 )}

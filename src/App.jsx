@@ -2,7 +2,7 @@ import React from "react"
 import Header from "./components/Header"
 import Main from "./components/Main"
 import AudioPlayer from "./components/AudioPlayer"
-// import Sidebar from "./components/Sidebar"
+import Favorites from "./components/Favorites"
 import './App.css'
 
 export default function App() {
@@ -10,8 +10,8 @@ export default function App() {
     <div className="wrapper">
       <Header className="header" />
       <AudioPlayer />
+      <Favorites className="aside" />
       <Main className="main"/>
-      {/* <Sidebar className="aside" /> */}
     </div>
   )
 }

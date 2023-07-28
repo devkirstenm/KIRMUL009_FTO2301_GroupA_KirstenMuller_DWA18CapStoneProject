@@ -73,7 +73,7 @@ export default function AudioPlayer() {
 
     return (
         <div className="audio--player">
-            <audio ref={audioPlayer} src="https://podcast-api.netlify.app/placeholder-audio.mp3">in src, put the link to the audio</audio>
+            <audio ref={audioPlayer} src="https://podcast-api.netlify.app/placeholder-audio.mp3"></audio>
             <button className="forward--backward--button" onClick={backTen}><BsArrowLeftShort className="forward--backward--button"/> 10</button>
             <button onClick={togglePlayPause} className="play--pause--button">
                 { isPlaying ? <FaPause className="pause--button" /> : <FaPlay className="play--button"/> } {/* conditional: if it's playing (aka it's true), then display pause icon, otherwise the play button */}

@@ -1,67 +1,54 @@
-    // 3: FAVOURITES: this is a state to update the amount of favorited music the user has
-    // const [favoriteAmount, setFavoriteAmount] = React.useState(o) // initially the favorites is set to 0 because the user hasn't favorited any music yet
-    
 import React from "react"
 
-export default function Sidebar() {
-    /** ----------------------------------------------------------------------
-     * FAVORITES SECTION:
-     * ----------------------------------------------------------------------
-     */
+export default function DraftFavorites() {
+    /* favorites section*/
 
-    /** this is to update the "favorites:" amount that keeps track of the number of favorites the user has
-     * 'Favorites: 0'
-     */
+    // favorites count state: updates the "favorites:" amount that keeps track of the number of favorites the user has
     const [favoritesCount, setFavoritesCount] = React.useState(0) // default is 0 favorites
     
-    function increaseFavorites() {
-        // setFavoritesCount(favoritesCount + 1) // there's a better way to do this below
-        // setFavoritesCount(function(oldValue) { return oldValue + 1 // however you can just use an arrow function to simplify this:
+    function increaseFavoritesCount() {
         setFavoritesCount(prevFavoritesCount => prevFavoritesCount + 1)
         }
-            /** now add this ^ functionality to the jsx
-                * example:
-                *         <div className="counter">
-                                <div className="counter--count">
-                                    <h1>{count}</h1>
-                                </div>
-                                <button className="counter--plus" onClick={add}>+</button>
-                            </div>
-                */
-    
 
-    function decreaseFavorites() {
+    function decreaseFavoritesCount() {
         setFavoritesCount(prevFavoritesCount => prevFavoritesCount - 1)
     } // add "decreaseFavorites" to jsx
 
-    /**this is to add a new favorited podcast episode to the list of Favorites (lesson 20 meme gen)*/
+    // add to favorites array state: adds a new favorite podcast episode to the list of Favorites 
     const [favoritesArray, setFavoritesArray] = React.useState([])
 
-    function addFavorite(podcast) { // you have to add "podcast" otherwise it won't know what podcast.id/image etc. is below
+    function addFavorite(podcast) { // NOTE: you have to add "podcast" otherwise it won't know what podcast.id/image etc. is in the return statement
         setFavoritesArray(prevFavoritesArray => {
             return [
                 ...prevFavoritesArray, 
                 <div key={podcast.id}>
                     <img src={podcast.image} />  
                     <h2>{podcast.title}</h2>
-                    <p>Season: {podcast.seasons}</p>
+                    <p>Season: {podcast.seasons.season}</p>
+                    <p>Episode: {podcast.seasons.episodes.episode}</p>
                 </div>                    
                 ]
         })
     }
+
+    /* sign up section */
+
     function ShowSignUpForm() {
         const [showSignUpForm, setShowSignUpForm] = React.useState(false);
           
-        // (*3*) (sign up form)
+        // state for sign up form
         const [signUp, setSignUp] = React.useState({
             email: "",
             password: "",
         })
 
-        // (*3*) (sign up form)
+        // function handleLoginIconClick() {
+        //     console.log("Clicked log in icon");
+        // }
+
         function handleChange(event) {
-            // from the event, i am pulling out the properties: name, value, type
-            const {name, value, type, checked} = event.target // we get these properties from event.target
+            // from the event, i am pulling out the properties: name, value
+            const {name, value} = event.target // we get these properties from event.target
             // access previous form data & return an object
             setFormData(prevFormData => ({
                 // object should have all of the properties of the previous form data...
@@ -70,25 +57,16 @@ export default function Sidebar() {
                 [name]: value // updates the value property (to whatever the user types)
             })) 
         }
-        console.log(formData) // (must confirm) displays: {email: "cat@gmail.com", password: "asdf"}
+        console.log(formData) // console should display: {email: "example@gmail.com", password: "example"}
         
-        // (*3*) (sign up form) - what happens when the form submits:
+        // handles 'sign up' form submission 
         function handleSubmit(event) {
             event.preventDefault()
             console.log("Successfully signed up")
-            // (action required!) put logic here to handle what happens when user presses sign up
+            // missing logic: what happens when user presses sign up
         }
-
-        function handleLoginIconClick() {
-            setShowSignUpForm(!showSignUpForm); // toggles the value when login icon is clicked
-          }
     }
-    /**
-     * ----------------------------------------------------------------------
-     * MEDIA PLAYER SECTION:
-     * ----------------------------------------------------------------------
-     */
-
+    
     return (
         <aside className="sidebar">
             <nav className="nav--bar">
@@ -96,10 +74,10 @@ export default function Sidebar() {
                 <h1 className="favorites--text">Favorites</h1>
                 <div className="nav--items">
                     <img src="./gear-icon.png" className="settings--icon"/>
-                    <img src="./login-icon.png" className="login--icon" onClick={handleLoginIconClick}/>
+                    <img src="./login-icon.png" className="login--icon" /* onClick={handleLoginIconClick} */ />
                 </div>
                 </nav>
-                {/* (*3*) (sign up form) - only display when login-icon is pressed */}
+                {/* sign up form - only display when login-icon is pressed */}
                 {/* Conditional rendering based on showSignUpForm */}
                 {showSignUpForm && (
                     <form onSubmit={handleSubmit} >
@@ -121,9 +99,10 @@ export default function Sidebar() {
                         />
                         <button>Sign up</button> {/* because the button is inside the <form>, it acts as a submit button automatically. So clicking "sign up" will trigger the submit event on the form, and therefore will run the 'handleSubmit' function*/}
                     </form>
+                )}
             {/* <h2>Amount of favorites: {favoritesCount}</h2>  */}
             <h2 className="favorites--amount--text">Favorites: 0</h2>
-            {/* this is where the logic for the favorites will go. Don't know if this is correct below. It will contain a scroll to scroll all your favorites.*/}
+            {/* this is where the logic for the favorites will go. Don't know if this is correct below.*/}
             <div key={podcast.id}> 
                 <img src={podcast.image} />  
                 <h2>{podcast.title}</h2>
@@ -133,11 +112,6 @@ export default function Sidebar() {
                     X
                 </button>
             </div> 
-            {/* MEDIA PLAYER SECTION*/}
-            <div>
-                <h1>This is a container for where the audio player goes</h1>
-            </div>
-            
         </aside>
     )
 }
