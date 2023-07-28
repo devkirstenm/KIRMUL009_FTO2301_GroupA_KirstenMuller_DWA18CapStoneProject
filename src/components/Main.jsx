@@ -134,21 +134,22 @@ export default function Main() {
             {selectedPodcast && (
                 <div className={`modal--overlay ${selectedPodcast ? '' : 'hidden'}`}>
                     <div className="modal--content">
-                        <p>{selectedPodcast.title}</p>
+                        <p className="podcast--title">{selectedPodcast.title}</p>
                         <img src={selectedPodcast.image} className="selected--podcast--image" />
-                        <p>{selectedPodcast.description}</p>
+                        <p className="podcast--description">{selectedPodcast.description}</p>
 
                         {/* Display the seasons */}
                         <div>
-                            <h3>Seasons:</h3>
+                            <h3 className="podcast--seasons--title">Seasons:</h3>
                             {selectedPodcast.seasons.map(season => (
-                                <div key={season.season}>
+                                <div> 
+                                    <div className="podcast--seasons--season" key={season.season}></div>
                                     <p>{season.title}</p>
                                     <img src={season.image} className="selected--podcast--season--image"/>
 
                                         {/* Display the episodes*/}
                                         <div>
-                                            <h4>Episodes:</h4>
+                                            <h4 className="podcast--episodes--title">Episodes:</h4>
                                             {season.episodes.map(episode => ( // for each episode, return...
                                                 <div key={episode.episode}>
                                                     <p>{`Episode ${episode.episode}: ${episode.title}`}</p>
