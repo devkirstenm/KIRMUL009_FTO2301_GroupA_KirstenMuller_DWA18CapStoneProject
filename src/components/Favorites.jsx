@@ -11,8 +11,8 @@ export default function Favorites() {
                     <img src="./gear-icon.png" className="settings--icon"/>
                 </div>
                 <h1 className="favorites--text">Favorites</h1>
-
             </nav>
+
             {/* sign up form - only display when login-icon is pressed */}
             <h2 className="favorites--amount--text">Favorites: 0</h2>
                 <button> 

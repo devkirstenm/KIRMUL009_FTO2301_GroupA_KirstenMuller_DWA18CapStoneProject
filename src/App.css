@@ -1,9 +1,10 @@
+/* ALL */
 * {
     box-sizing: border-box;
     background-color: #E4E5E7;
   }
 
-/* layout test with css coder */
+/* layout */
 .wrapper {
   display: flex;
   flex-flow: row wrap;
@@ -64,8 +65,8 @@
 /* MAIN.JSX */
 .main {
   margin: auto;
-  
 }
+
 /* recommendations */
 .recommendations--title {
  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -208,8 +209,6 @@
 
 .podcast--description {
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-
-
 }
 
 .podcast--seasons--title {
